@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Entity.Student;
 import com.example.demo.Service.StudentServiceImpl;
-
 @RestController
+//@RequestMapping Annotation for mapping web requests onto methods 
 @RequestMapping("/api/student")
+
 public class StudentController {
 		
-	
+	// dependency injection
 	public StudentServiceImpl service;
 	
 	
@@ -31,32 +32,42 @@ public class StudentController {
 	}
 	
 	
-	@GetMapping()
-	public List<Student> getStudents(){
 	
+	@GetMapping()
+	
+	public List<Student> getStudents(){
+		//returns a list of student objects
 		return service.getStudents();	
 	}
 	
 	
+	//Annotation for mapping HTTP POST requests onto specific handler methods
 	 @PostMapping()
+	// save operation
 	  public ResponseEntity<Student> create(@RequestBody Student student) {
 		return  new ResponseEntity<Student>(service.create(student), HttpStatus.CREATED);
 		  
 	  }
-	 
+	
+	//Annotation for mapping HTTP GET requests onto specific handler methods
 	@GetMapping("{id}")
+	// read operation
 	public ResponseEntity<Student> getStudentbyId(@PathVariable("id") long id ) {
 		return new ResponseEntity<Student>(service.getStudentById(id), HttpStatus.OK);
 	}
 	
- 
+	 
+	//Annotation for mapping HTTP PUT requests onto specific handler methods
   @PutMapping("{id}")
+//update operation
   public ResponseEntity<Student> update(@RequestBody Student student, @PathVariable("id") long id ){
 	return new ResponseEntity<Student> (service.update(student, id), HttpStatus.OK);
 	  
   } 
-	
+  
+//Annotation for mapping HTTP DELETE requests onto specific handler methods
 	@DeleteMapping("{id}")
+	// delete operation
     public ResponseEntity<String> delete(@PathVariable ("id") long id) {
 	
 		service.delete(id);
